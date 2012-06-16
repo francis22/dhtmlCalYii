@@ -4,5 +4,6 @@ dhtmlCalYii
  * Created Francis <jesusloves.francis@gmail.com>
 -----------
 dhtmlCalYii is yii module for dhtmlxScheduler.
+* module created
 
 

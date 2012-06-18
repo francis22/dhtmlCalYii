@@ -8,11 +8,20 @@ class Dynamicloading extends CWidget
  public function init()
  {
 	$url = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.dhtmlCalYii.components'));
-
+	$url1 = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.dhtmlCalYii.components.codebase.ext'));
  	Yii::app()->clientScript->registerScriptFile(
- 				$url.'/dhtmlx/dhtmlxscheduler.js',
+ 				$url.'/codebase/dhtmlxscheduler.js',
  				 CClientScript::POS_BEGIN) ;
- 				 
+	
+	Yii::app()->clientScript->registerScriptFile(
+ 				$url1.'/dhtmlxscheduler_agenda_view.js',
+ 				 CClientScript::POS_BEGIN) ;
+
+	Yii::app()->clientScript->registerScriptFile(
+ 				$url1.'/dhtmlxscheduler_year_view.js',
+ 				 CClientScript::POS_BEGIN) ;
+
+ 				 				  				 
  	Yii::app()->clientScript->registerCss('style1',
  				'html, body{
 				margin:0px;
@@ -22,7 +31,7 @@ class Dynamicloading extends CWidget
 				}
 				');
 
-	Yii::app()->clientScript->registerCssFile($url.'/dhtmlx/dhtmlxscheduler.css');
+	Yii::app()->clientScript->registerCssFile($url.'/codebase/dhtmlxscheduler.css');
 	Yii::app()->clientScript->registerScript('script1',
  				'function init() {
 					scheduler.config.xml_date="%Y-%m-%d %H:%i";

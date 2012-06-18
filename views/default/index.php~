@@ -1,3 +1,6 @@
+
+			
 <?php
-$this->widget("Dynamicloading",array("model"=>$model));
+
+$this->widget("Dynamicloading");
 ?>

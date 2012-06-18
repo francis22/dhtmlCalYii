@@ -2,11 +2,12 @@
 
 class DefaultController extends Controller
 {
-//	public $layout='/layouts/main';
-	
+
+public $layout='/layouts/column2'; //default
+//public $layout='/layouts/column1'; //remove slidebar
+//public $layout='/layouts/main'; //full screen
 	public function actionIndex()
 	{
-//	Yii::app()->controller->onloadFunctions="init();";
 		$this->render('index');
 	}
 }

@@ -1,0 +1,12 @@
+<?php
+
+class DefaultController extends Controller
+{
+//	public $layout='/layouts/main';
+	
+	public function actionIndex()
+	{
+//	Yii::app()->controller->onloadFunctions="init();";
+		$this->render('index');
+	}
+}

@@ -37,7 +37,7 @@ class Events extends CActiveRecord
 	public function rules()
 	{
 		/*
-		it should be like 
+			//it should be like this in model/customer 
 			Yii::import('application.modules.dhtmlCalYii.models.*');
 
 			return array(

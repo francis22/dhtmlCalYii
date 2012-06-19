@@ -1,8 +1,0 @@
-<?php
-$link=Yii::app()->request->baseUrl.'/protected/modules/dhtmlCalYii/';
-require($link."codebase/connector/scheduler_connector.php");// connector file
-$res=mysql_connect("localhost","root","root");// db connection
-mysql_select_db("testproject"); // db connection
-$gridConn = new GridConnector($res,"MySQL"); // connector object;    parameters: db connection and the type of the using db
-$gridConn->render_table("dhtmlcal","item_id","item_nm,item_cd");// data configuration
-?>

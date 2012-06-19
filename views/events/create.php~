@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Events'=>array('index'),
-	'Create'=>'#',
+	'Create',
 );
 
 $this->menu=array(

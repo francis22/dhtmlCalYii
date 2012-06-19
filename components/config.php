@@ -3,6 +3,18 @@
 	$mysql_user = "root";
 	$mysql_pass = "root";
 	$mysql_db = "testproject";
+	
+	//configure database for pagoda
+	if(isset($_SERVER['PLATFORM']))
+	{
+		
+		$mysql_server="tunnel.pagodabox.com:3306";
+		$mysql_user = "pinkie";
+		$mysql_pass = "7cumd2MS";
+		$mysql_db = "testproject";
+	
+	}
+  
 	//$excel_file = "../common/excel_sample.xls";
 	
 	//necessary for PostgreSQL related samples only 

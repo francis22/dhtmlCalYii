@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Events'=>array('index'),
-	$model->event_id.'-'.$model->event_name =>array('view&id='.$model->event_id),
+	$model->event_id.'-'.$model->event_name =>array('view','id'=>$model->event_id),
 );
 
 $this->menu=array(
@@ -23,6 +23,6 @@ $this->menu=array(
 		'start_date',
 		'end_date',
 		'details',
-		'customer',
+		'customerid.customer',
 	),
 )); ?>

@@ -1,6 +1,6 @@
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'events-form',
+	'id'=>'customer-form',
 	'enableAjaxValidation'=>true,
 	
 )); ?>

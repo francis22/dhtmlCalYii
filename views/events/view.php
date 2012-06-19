@@ -23,6 +23,6 @@ $this->menu=array(
 		'start_date',
 		'end_date',
 		'details',
-		'customer',
+		'customerid.name',
 	),
 )); ?>

@@ -1,10 +1,5 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
-<div style="margin-top:20px;margin-bottom:50px;">
-	<div style="margin-left:10px; float: left;" ><?php echo CHtml::link('Add',array('/dhtmlCalYii/events/create'),array(class=>"btn"));?></div>
-	<div class="btn" style="margin-left:10px; float: left;" ><?php echo CHtml::link('Manage',array('/dhtmlCalYii/events/admin'));?></div>
-	<div class="btn" style="margin-left:10px; float: left;" ><?php echo CHtml::link('Scheduler',array('/dhtmlCalYii/events/index'));?></div>
-</div>		
 
 	<?php echo $content; ?>
 

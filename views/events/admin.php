@@ -47,7 +47,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'start_date',
 		'end_date',
 		'details',
-		'customer',
+		'customerid.name',
 		array(
 			'class'=>'CButtonColumn',
 			//'class'=>'bootstrap.widgets.BootButtonColumn',

@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Events</h1>
+<h1>Scheduler</h1>
 
 <?php
 $this->widget("Dynamicloading");

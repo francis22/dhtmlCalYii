@@ -1,6 +1,6 @@
 <?php
 /**
-this is used to load scheduler component
+Dynamicloading.php  is used to load scheduler component
  */
 class Dynamicloading extends CWidget
 {

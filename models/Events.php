@@ -36,6 +36,16 @@ class Events extends CActiveRecord
 	 */
 	public function rules()
 	{
+		/*
+		it should be like 
+			Yii::import('application.modules.dhtmlCalYii.models.*');
+
+			return array(
+			'event'=>array(self::HAS_MANY,'Events','customer'),
+			'eventCount'=>array(self::STAT,'Events','customer'),
+
+			);
+		*/
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(

@@ -32,7 +32,7 @@ class EventsController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'index', 'view', 'create' and 'update' actions
-				'actions'=>array('index','view','create','update'),
+				'actions'=>array('index','view','create','update','config'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,6 +49,56 @@ class EventsController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
+	 
+	/*Initalize database for module*/ 
+	public function actionConfig()
+	{
+		$config = Yii::app()->db->connectionString;	
+	      $dbname = '';
+      	$host   = '';
+		$port = '';
+	      
+		$conn_arr = explode( ':', $config  );
+
+        	// it only works with mysql so let's check for it
+	      if( $conn_arr[0] == 'mysql' )
+        	{
+            	// let's get the attributes
+	            $conn_attr = explode( ';', $conn_arr[1] );
+           		for( $i=0; $i<sizeof( $conn_attr ); $i++ )
+            	{
+	                	// find the host
+               		 if( stristr( $conn_attr[$i], 'host=' ) )
+      		       {
+		                    $host = str_ireplace( 'host=', '', $conn_attr[$i] );
+            		 }
+				if( stristr( $conn_attr[$i], 'port=' ) )
+                		{
+	                  	$port = str_ireplace( 'port=', '', $conn_attr[$i] );
+                		}
+	        	      // find the dbname
+                		if( stristr( $conn_attr[$i], 'dbname=' ) )
+                		{
+	                  	$dbname = str_ireplace( 'dbname=', '', $conn_attr[$i] );
+                		}
+            	}
+        }
+	  if($port!='')
+		  $host=$host.':'.$port;
+
+//	include ('config.php');
+	include ('codebase/connector/scheduler_connector.php');
+	$res=mysql_connect( $host, Yii::app()->db->username,Yii::app()->db->password);
+      mysql_select_db($dbname);
+	
+    	//$res=mysql_connect($mysql_server,$mysql_user,$mysql_pass); 
+    	//mysql_select_db($mysql_db); 
+	
+	$scheduler = new schedulerConnector($res);
+	//$scheduler->enable_log("log.txt",true);
+	$scheduler->render_table("tbl_events","event_id","start_date,end_date,event_name,details,customer");
+
+	}
 	public function actionView($id)
 	{
 		$this->render('view',array(

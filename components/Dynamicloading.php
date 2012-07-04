@@ -10,6 +10,7 @@ class Dynamicloading extends CWidget
 	{
 		$customers=Customer::model()->findAll();//need to change 'Customer' if your database table for user is diffrent
 		$str='[';
+		$str.= '{key:0, label:""},';
 		foreach($customers as $customer)
 		{
 			$str.= '{key:'.$customer->id.', label:"'.$customer->name.'-'.$customer->surnames.'"},';
@@ -21,7 +22,7 @@ class Dynamicloading extends CWidget
 	public function init()
  	{
 		$url = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.dhtmlCalYii.components'));
-		
+		$dl=Yii::app()->createUrl('dhtmlCalYii/events/config');
 		//basic scheduler script *Modified!!
 		Yii::app()->clientScript->registerScriptFile(
 	 				$url.'/codebase/dhtmlxscheduler.js',
@@ -57,18 +58,19 @@ class Dynamicloading extends CWidget
 		Yii::app()->clientScript->registerCssFile($url.'/codebase/dhtmlxscheduler.css');
 		Yii::app()->clientScript->registerScript('script1',
  			'function init() {
+
  				scheduler.locale.labels.timeline_tab = "Timeline"
 				scheduler.locale.labels.section_custom="Section";	
 				scheduler.config.xml_date="%Y-%m-%d %H:%i";
 			  	var sections='.$this->loadfun().';
 				scheduler.createTimelineView({
 					name:	"timeline",
-					x_unit:	"day",
-					x_date:	"%D,%d",
-					x_step:	  1,
-					x_size:   12,
-					x_start:  0,
-					x_length: 12,
+					x_unit:	"minute",
+					x_date:	"%H:%i",
+					x_step:	  30,
+					x_size:   24,
+					x_start:  16,
+					x_length: 48,
 					y_unit:	sections,
 					y_property:	"customer",
 					render:"bar"
@@ -77,6 +79,8 @@ class Dynamicloading extends CWidget
 			        scheduler.config.xml_date="%Y-%m-%d %H:%i";
 		                scheduler.config.time_step = 15;
 		                scheduler.config.multi_day = true;
+				    scheduler.config.full_day = true;
+
 
 				scheduler.templates.week_agenda_event_text = function(start_date, end_date, event, date, position) {
 					switch(position){
@@ -92,21 +96,56 @@ class Dynamicloading extends CWidget
 				};
 
 			  	scheduler.config.prevent_cache = true;
+/* map_to used denote databse field.if new field is added.we need to add it in dynamicloadingconnector.php */
 				scheduler.config.lightbox.sections=[	
 					{name:"label", height:30, map_to:"text", type:"textarea" , focus:true},
 					{name:"description", height:43, type:"textarea", map_to:"details" },
 					{name:"time", height:72, type:"time", map_to:"auto"},
-				        {name:"customer", height:23, type:"select", options:sections, map_to:"customer" },
+				        {name:"customer", height:23, type:"select", options:sections, map_to:"customer",},
 					]
+/* name label scheduler.locale.labels.section_NameInLightBoxSection given above */				
+				scheduler.locale.labels.section_label = "Event";
+				scheduler.locale.labels.section_description = "Description";
+				scheduler.locale.labels.section_time = "Time";
+				scheduler.locale.labels.section_customer = "Customer";
+				
 				scheduler.config.first_hour=4;
-				scheduler.locale.labels.section_location="Location";
 				scheduler.config.details_on_create=true;
 				scheduler.config.details_on_dblclick=true;
-		
+				
+				/*scheduler.config.readonly=true;//ReadOnly */
+/* Disable Dreag */				
+				scheduler.attachEvent("onBeforeDrag", function(){
+				    return false;
+				})
+/* VALIDATION RULE */					
+				scheduler.attachEvent("onEventSave",function(id,data){
+			      var alertStr="";
+				if (!data.text) {
+					alertStr+="* Label must not be empty.\n";
+				}
+				if (!data.details) {
+					alertStr+="* Description must not be empty.\n";
+				}
+				if (data.customer==0) {
+					alertStr+="* Select a customer\n";
+				}
+				if(alertStr!="")
+				{
+					alert(alertStr);
+					return false;
+				}
+				else
+				return true;
+				})
+				
 				scheduler.init("scheduler_here",new Date(),"month");
 				scheduler.setLoadMode("day");
-				scheduler.load("'.$url.'/dynamicloadingconnector.php?uid="+scheduler.uid());
-				var dp = new dataProcessor("'.$url.'/dynamicloadingconnector.php");
+//				scheduler.load("'.$url.'/dynamicloadingconnector.php");
+//				var dp = new dataProcessor("'.$url.'/dynamicloadingconnector.php");
+				scheduler.load("'.$dl.'");
+				var dp = new dataProcessor("'.$dl.'");
+
 				dp.init(scheduler);
 		
 			}',

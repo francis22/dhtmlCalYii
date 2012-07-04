@@ -72,9 +72,9 @@ class EventsController extends Controller
       		       {
 		                    $host = str_ireplace( 'host=', '', $conn_attr[$i] );
             		 }
-				if( stristr( $conn_attr[$i], 'port=' ) )
+				if( stristr( $conn_attr[$i], 'mysql:port=' ) )
                 		{
-	                  	$port = str_ireplace( 'port=', '', $conn_attr[$i] );
+	                  	$port = str_ireplace( 'mysql:port=', '', $conn_attr[$i] );
                 		}
 	        	      // find the dbname
                 		if( stristr( $conn_attr[$i], 'dbname=' ) )
@@ -87,16 +87,16 @@ class EventsController extends Controller
 		  $host=$host.':'.$port;
 
 //	include ('config.php');
-	include ('codebase/connector/scheduler_connector.php');
-	$res=mysql_connect( $host, Yii::app()->db->username,Yii::app()->db->password);
-      mysql_select_db($dbname);
+		include ('codebase/connector/scheduler_connector.php');
+		$res=mysql_connect( $host, Yii::app()->db->username,Yii::app()->db->password);
+      	mysql_select_db($dbname);
 	
-    	//$res=mysql_connect($mysql_server,$mysql_user,$mysql_pass); 
-    	//mysql_select_db($mysql_db); 
+	    	//$res=mysql_connect($mysql_server,$mysql_user,$mysql_pass); 
+    		//mysql_select_db($mysql_db); 
 	
-	$scheduler = new schedulerConnector($res);
-	//$scheduler->enable_log("log.txt",true);
-	$scheduler->render_table("tbl_events","event_id","start_date,end_date,event_name,details,customer");
+		$scheduler = new schedulerConnector($res);
+		//$scheduler->enable_log("log.txt",true);
+		$scheduler->render_table("tbl_events","event_id","start_date,end_date,event_name,details,customer");
 
 	}
 	public function actionView($id)

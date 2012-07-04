@@ -92,6 +92,7 @@ class EventsController extends Controller
 		
 		$scheduler = new schedulerConnector($res);
 		//$scheduler->enable_log("log.txt",true);
+		//list all database fields here...
 		$scheduler->render_table("tbl_events","event_id","start_date,end_date,event_name,details,customer");
 
 	}

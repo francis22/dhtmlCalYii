@@ -96,7 +96,7 @@ class Dynamicloading extends CWidget
 				};
 
 			  	scheduler.config.prevent_cache = true;
-/* map_to used denote databse field.if new field is added.we need to add it in dynamicloadingconnector.php */
+/* map_to used to denote databse field.if new field is added.we need to add it in dhtmlCalYii/controllers/EventsControllers/ActionConfig */
 				scheduler.config.lightbox.sections=[	
 					{name:"label", height:30, map_to:"text", type:"textarea" , focus:true},
 					{name:"description", height:43, type:"textarea", map_to:"details" },
@@ -141,8 +141,6 @@ class Dynamicloading extends CWidget
 				
 				scheduler.init("scheduler_here",new Date(),"month");
 				scheduler.setLoadMode("day");
-//				scheduler.load("'.$url.'/dynamicloadingconnector.php");
-//				var dp = new dataProcessor("'.$url.'/dynamicloadingconnector.php");
 				scheduler.load("'.$dl.'");
 				var dp = new dataProcessor("'.$dl.'");
 

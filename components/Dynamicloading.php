@@ -22,7 +22,8 @@ class Dynamicloading extends CWidget
 	public function init()
  	{
 		$url = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.dhtmlCalYii.components'));
-		$dl=Yii::app()->createUrl('dhtmlCalYii/events/config');
+		$moduleName=Yii::app()->controller->module->getName();
+		$dl=Yii::app()->createUrl($moduleName.'/events/config');
 		//basic scheduler script *Modified!!
 		Yii::app()->clientScript->registerScriptFile(
 	 				$url.'/codebase/dhtmlxscheduler.js',

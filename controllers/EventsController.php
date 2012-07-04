@@ -54,46 +54,42 @@ class EventsController extends Controller
 	public function actionConfig()
 	{
 		$config = Yii::app()->db->connectionString;	
-	      $dbname = '';
-      	$host   = '';
+		$dbname = '';
+		$host   = '';
 		$port = '';
-	      
-		$conn_arr = explode( ':', $config  );
-
-        	// it only works with mysql so let's check for it
-	      if( $conn_arr[0] == 'mysql' )
-        	{
-            	// let's get the attributes
-	            $conn_attr = explode( ';', $conn_arr[1] );
-           		for( $i=0; $i<sizeof( $conn_attr ); $i++ )
-            	{
-	                	// find the host
-               		 if( stristr( $conn_attr[$i], 'host=' ) )
-      		       {
-		                    $host = str_ireplace( 'host=', '', $conn_attr[$i] );
-            		 }
-				if( stristr( $conn_attr[$i], 'mysql:port=' ) )
-                		{
-	                  	$port = str_ireplace( 'mysql:port=', '', $conn_attr[$i] );
-                		}
-	        	      // find the dbname
-                		if( stristr( $conn_attr[$i], 'dbname=' ) )
-                		{
-	                  	$dbname = str_ireplace( 'dbname=', '', $conn_attr[$i] );
-                		}
-            	}
-        }
-	  if($port!='')
-		  $host=$host.':'.$port;
-
-//	include ('config.php');
+		
+		//$conn_arr = explode( ':', $config  );
+		
+		$conn_attr = explode( ';', $config );
+		for( $i=0; $i<sizeof( $conn_attr ); $i++ )
+		{
+		// find the host
+			if( stristr( $conn_attr[$i], 'mysql:host=' ) )
+			{
+			  $host = str_ireplace( 'mysql:host=', '', $conn_attr[$i] );
+			}
+			if( stristr( $conn_attr[$i], 'mysql:port=' ) )
+			{
+			$port = str_ireplace( 'mysql:port=', '', $conn_attr[$i] );
+			}
+			// find the dbname
+			if( stristr( $conn_attr[$i], 'dbname=' ) )
+			{
+			$dbname = str_ireplace( 'dbname=', '', $conn_attr[$i] );
+			}
+		
+		  }
+		if($port!='')
+			$host=$host.':'.$port;
+		
+		//	include ('config.php');
 		include ('codebase/connector/scheduler_connector.php');
 		$res=mysql_connect( $host, Yii::app()->db->username,Yii::app()->db->password);
-      	mysql_select_db($dbname);
-	
-	    	//$res=mysql_connect($mysql_server,$mysql_user,$mysql_pass); 
-    		//mysql_select_db($mysql_db); 
-	
+		mysql_select_db($dbname);
+		
+		//$res=mysql_connect($mysql_server,$mysql_user,$mysql_pass); 
+		//mysql_select_db($mysql_db); 
+		
 		$scheduler = new schedulerConnector($res);
 		//$scheduler->enable_log("log.txt",true);
 		$scheduler->render_table("tbl_events","event_id","start_date,end_date,event_name,details,customer");
